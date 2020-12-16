@@ -40,6 +40,7 @@ export default {
   'pages.searchTable.updateForm.ruleProps.typeLabel': '规则类型',
   'pages.searchTable.updateForm.schedulingPeriod.title': '设定日期',
   'pages.searchTable.updateForm.ruleName.id':'债券ID',
+  'pages.searchTable.sendemail':'发送邮件',
   'pages.searchTable.updateForm.schedulingPeriod.timeLabel': '开始日期',
   'pages.searchTable.updateForm.schedulingPeriod.enddate': '到期日期',
   'pages.searchTable.updateForm.schedulingPeriod.timeRules': '请选择开始日期！',

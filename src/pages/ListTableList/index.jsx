@@ -274,6 +274,9 @@ const TableList = () => {
           <Button type="primary" key="primary" onClick={() => handleModalVisible(true)}>
             <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="新建" />
           </Button>,
+          <Button type="primary" key="primary" onClick={() => handleModalVisible(true)}>
+            <PlusOutlined /> <FormattedMessage id="pages.searchTable.sendemail" defaultMessage="发送邮件" />
+          </Button>
         ]}
         request={(params, sorter, filter) => queryRule({ ...params, sorter, filter })}
         columns={columns}
@@ -375,15 +378,15 @@ const TableList = () => {
         }}
         closable={false}
       >
-        {row?.name && (
+        {row?.SECUABBR && (
           <ProDescriptions
             column={2}
-            title={row?.name}
+            title={row?.SECUABBR}
             request={async () => ({
               data: row || {},
             })}
             params={{
-              id: row?.name,
+              id: row?.SECUABBR,
             }}
             columns={columns}
           />
