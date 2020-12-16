@@ -40,7 +40,12 @@ const handleUpdate = async (fields) => {
     await updateRule({
       name: fields.name,
       desc: fields.desc,
-      key: fields.key,
+      id: fields.id,
+      startdate:fields.startdate,
+      enddate:fields.enddate,
+      target:fields.target,
+      issuesize:fields.issuesize,
+      couponrate:fields.couponrate
     });
     hide();
     message.success('配置成功');

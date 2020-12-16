@@ -5,6 +5,7 @@ import {
   ProFormText,
   ProFormTextArea,
   StepsForm,
+  ProFormDatePicker,
   ProFormRadio,
   ProFormDateTimePicker,
 } from '@ant-design/pro-form';
@@ -41,14 +42,23 @@ const UpdateForm = (props) => {
     >
       <StepsForm.StepForm
         initialValues={{
-          name: props.values.name,
-          desc: props.values.desc,
+          id:props.values.id,
+          name: props.values.SECUABBR,
+          desc: props.values.CHINAME,
         }}
         title={intl.formatMessage({
           id: 'pages.searchTable.updateForm.basicConfig',
           defaultMessage: '基本信息',
         })}
       >
+        <ProFormText disabled
+        name="id"
+        label={intl.formatMessage({
+          id: 'pages.searchTable.updateForm.ruleName.id',
+          defaultMessage: '债券ID',
+        })}
+        width="m"
+      />
         <ProFormText
           name="name"
           label={intl.formatMessage({
@@ -62,7 +72,7 @@ const UpdateForm = (props) => {
               message: (
                 <FormattedMessage
                   id="pages.searchTable.updateForm.ruleName.nameRules"
-                  defaultMessage="请输入规则名称！"
+                  defaultMessage="请输入债券名称！"
                 />
               ),
             },
@@ -73,7 +83,7 @@ const UpdateForm = (props) => {
           width="m"
           label={intl.formatMessage({
             id: 'pages.searchTable.updateForm.ruleDesc.descLabel',
-            defaultMessage: '规则描述',
+            defaultMessage: '债券描述',
           })}
           placeholder={intl.formatMessage({
             id: 'pages.searchTable.updateForm.ruleDesc.descPlaceholder',
@@ -85,7 +95,7 @@ const UpdateForm = (props) => {
               message: (
                 <FormattedMessage
                   id="pages.searchTable.updateForm.ruleDesc.descRules"
-                  defaultMessage="请输入至少五个字符的规则描述！"
+                  defaultMessage="请输入至少五个字符的债券描述！"
                 />
               ),
               min: 5,
@@ -95,12 +105,13 @@ const UpdateForm = (props) => {
       </StepsForm.StepForm>
       <StepsForm.StepForm
         initialValues={{
-          target: '0',
-          template: '0',
+          target: props.values.SECUCATEGORY,
+          issuesize:props.values.ISSUESIZE,
+          couponrate:props.values.COUPONRATE
         }}
         title={intl.formatMessage({
           id: 'pages.searchTable.updateForm.ruleProps.title',
-          defaultMessage: '配置规则属性',
+          defaultMessage: '债券信息',
         })}
       >
         <ProFormSelect
@@ -108,59 +119,78 @@ const UpdateForm = (props) => {
           width="m"
           label={intl.formatMessage({
             id: 'pages.searchTable.updateForm.object',
-            defaultMessage: '监控对象',
+            defaultMessage: '债券类型',
           })}
           valueEnum={{
-            0: '表一',
-            1: '表二',
+            0: '普通企业债',
+            1: '可交换公司债券',
+            2: '资产支持票据',
+            3: '项目收益票据'
           }}
         />
-        <ProFormSelect
-          name="template"
+        <ProFormText
+          name="issuesize"
           width="m"
           label={intl.formatMessage({
-            id: 'pages.searchTable.updateForm.ruleProps.templateLabel',
-            defaultMessage: '规则模板',
+            id: 'pages.searchTable.updateForm.ruleDesc.issuesize',
+            defaultMessage: '发行规模',
           })}
-          valueEnum={{
-            0: '规则模板一',
-            1: '规则模板二',
-          }}
         />
-        <ProFormRadio.Group
-          name="type"
+        <ProFormText
+          name="couponrate"
+          width="m"
           label={intl.formatMessage({
-            id: 'pages.searchTable.updateForm.ruleProps.typeLabel',
-            defaultMessage: '规则类型',
+            id: 'pages.searchTable.updateForm.ruleDesc.couponrate',
+            defaultMessage: '票面利率',
           })}
-          options={[
-            {
-              value: '0',
-              label: '强',
-            },
-            {
-              value: '1',
-              label: '弱',
-            },
-          ]}
         />
+        {/*<ProFormSelect*/}
+        {/*  name="template"*/}
+        {/*  width="m"*/}
+        {/*  label={intl.formatMessage({*/}
+        {/*    id: 'pages.searchTable.updateForm.ruleProps.templateLabel',*/}
+        {/*    defaultMessage: '规则模板',*/}
+        {/*  })}*/}
+        {/*  valueEnum={{*/}
+        {/*    0: '规则模板一',*/}
+        {/*    1: '规则模板二',*/}
+        {/*  }}*/}
+        {/*/>*/}
+        {/*<ProFormRadio.Group*/}
+        {/*  name="type"*/}
+        {/*  label={intl.formatMessage({*/}
+        {/*    id: 'pages.searchTable.updateForm.ruleProps.typeLabel',*/}
+        {/*    defaultMessage: '规则类型',*/}
+        {/*  })}*/}
+        {/*  options={[*/}
+        {/*    {*/}
+        {/*      value: '0',*/}
+        {/*      label: '强',*/}
+        {/*    },*/}
+        {/*    {*/}
+        {/*      value: '1',*/}
+        {/*      label: '弱',*/}
+        {/*    },*/}
+        {/*  ]}*/}
+        {/*/>*/}
       </StepsForm.StepForm>
       <StepsForm.StepForm
         initialValues={{
-          type: '1',
-          frequency: 'month',
+          startdate: props.values.LISTINGDATE,
+          enddate: props.values.DELISTINGDATE,
         }}
         title={intl.formatMessage({
           id: 'pages.searchTable.updateForm.schedulingPeriod.title',
-          defaultMessage: '设定调度周期',
+          defaultMessage: '设定日期',
         })}
       >
-        <ProFormDateTimePicker
-          name="time"
+        <ProFormDatePicker
+
+          name="startdate"
           width="m"
           label={intl.formatMessage({
             id: 'pages.searchTable.updateForm.schedulingPeriod.timeLabel',
-            defaultMessage: '开始时间',
+            defaultMessage: '开始日期',
           })}
           rules={[
             {
@@ -168,23 +198,30 @@ const UpdateForm = (props) => {
               message: (
                 <FormattedMessage
                   id="pages.searchTable.updateForm.schedulingPeriod.timeRules"
-                  defaultMessage="请选择开始时间！"
+                  defaultMessage="请选择开始日期！"
                 />
               ),
             },
           ]}
         />
-        <ProFormSelect
-          name="frequency"
-          label={intl.formatMessage({
-            id: 'pages.searchTable.updateForm.object',
-            defaultMessage: '监控对象',
-          })}
+        <ProFormDatePicker
+          name="enddate"
           width="m"
-          valueEnum={{
-            month: '月',
-            week: '周',
-          }}
+          label={intl.formatMessage({
+            id: 'pages.searchTable.updateForm.schedulingPeriod.enddate',
+            defaultMessage: '到期日期',
+          })}
+          rules={[
+            {
+              required: true,
+              message: (
+                <FormattedMessage
+                  id="pages.searchTable.updateForm.schedulingPeriod.endtimeRules"
+                  defaultMessage="请选择到期日期！"
+                />
+              ),
+            },
+          ]}
         />
       </StepsForm.StepForm>
     </StepsForm>
