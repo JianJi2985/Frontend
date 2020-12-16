@@ -52,8 +52,8 @@ const UpdateForm = (props) => {
         <ProFormText
           name="name"
           label={intl.formatMessage({
-            id: 'pages.searchTable.updateForm.ruleName.nameLabel',
-            defaultMessage: '规则名称',
+            id: 'pages.searchTable.updateForm.ruleName.SECUABBR',
+            defaultMessage: '债券名称',
           })}
           width="m"
           rules={[

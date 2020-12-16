@@ -16,12 +16,13 @@ class DemoEcharts extends React.Component {
     var myChart = echarts.init(document.getElementById('main'));
     // 绘制图表
     myChart.setOption({
-      title: { text: '某地区蒸发量和降水量' },
+      title: { text: '某地财政预算收入与预算支出' },
+      animation: false,
       tooltip : {
         trigger: 'axis'
       },
       legend: {
-        data:['蒸发量','降水量']
+        data:['预算收入','预算支出']
       },
       toolbox: {
         show : true,
@@ -48,7 +49,7 @@ class DemoEcharts extends React.Component {
       ],
       series : [
         {
-          name:'蒸发量',
+          name:'预算收入',
           type:'bar',
           data: this.props.ydata1,
           markPoint : {
@@ -64,7 +65,7 @@ class DemoEcharts extends React.Component {
           }
         },
         {
-          name:'降水量',
+          name:'预算支出',
           type:'bar',
           data: this.props.ydata2,
           markPoint : {
