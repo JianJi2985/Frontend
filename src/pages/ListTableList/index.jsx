@@ -79,6 +79,7 @@ const handleRemove = async (selectedRows) => {
   }
 };
 
+
 const TableList = () => {
   const [createModalVisible, handleModalVisible] = useState(false);
   // console.log('createModalVisible')
@@ -274,7 +275,7 @@ const TableList = () => {
           <Button type="primary" key="primary" onClick={() => handleModalVisible(true)}>
             <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="新建" />
           </Button>,
-          <Button type="primary" key="primary" onClick={() => handleModalVisible(true)}>
+          <Button type="primary" key="primary" onClick={() => {}}>
             <PlusOutlined /> <FormattedMessage id="pages.searchTable.sendemail" defaultMessage="发送邮件" />
           </Button>
         ]}
