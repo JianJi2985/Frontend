@@ -13,26 +13,11 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 import { connect } from 'dva'
 import DemoEcharts from "@/components/Echarts/DemoEcharts";
+import { stringify } from 'qs';
 // import Echarts from "@/pages/Echarts";
 const namespace = 'echarts'
-@connect((state)=>{
-  return{
-    xdata:state[namespace].xdata,
-    ydata1:state[namespace].ydata1,
-    ydata2:state[namespace].ydata2,
-    year:state[namespace].year,
-    dataversion:state[namespace].dataversion
-  }
-},(dispatch) => {
-  return {
-    fetchNewData:()=>{
-      dispatch({type:namespace+"/fetchNewData"})
-    },
-    initData:()=>{
-      dispatch({type:namespace+"/initData",payload:{year:'2020'}})
-    }
-  }
-})
+
+
 class EchartsTest extends Component {
   constructor(props) {
     super(props);
@@ -44,7 +29,6 @@ class EchartsTest extends Component {
     // console.log(this.state.year)
     // params=this.state.year
     setInterval(() => {
-      this.props.initData()
       i++;
         this.setState({
           year:this.props.year,
@@ -58,7 +42,7 @@ class EchartsTest extends Component {
           // ydata2: [20.6 + i, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
         });
 
-    }, 1000);
+    }, 100000000);
 
   };
   // componentWillUnmount() {
@@ -81,21 +65,40 @@ class EchartsTest extends Component {
       <div className='examples'>
         <div className='parent'>
           <label> 某地
-            <DatePicker onChange={(date)=>{console.log('value is', date._d);
-              // res=request('/api/echarts/',date._d);
-              //   if ((this.state.year!=res.year)||(this.state.dataversion!=res.dataversion)){
-              //     this.setState({
-              //       year:res.year,
-              //       key:res.year,
-              //       xdata:res.xdata,
-              //       ydata1:res.ydata1,
-              //       ydata2:res.ydata2,
-              //       dataversion:res.dataversion
-              //       // xdata: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-              //       // ydata1: [20.0 + i, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-              //       // ydata2: [20.6 + i, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-              //     });
-              //   }
+            <DatePicker onChange={(date)=> {
+                console.log('value is', date.year());
+                let key = date.year(), xdata = [], ydata1 = [], ydata2 = [], dataversion = 0;
+                request.get('/api/echarts/?year=' + date.year()).then((resp) => {
+                  for (let i in resp) {
+                    xdata.push(resp[i].month);
+                    ydata1.push(resp[i].income);
+                    ydata2.push(resp[i].expense);
+                    key = resp[i].year;
+                    dataversion = resp[i].dataversion;
+                  }
+                  this.setState({
+                    year: key,
+                    key: key,
+                    xdata: xdata,
+                    ydata1: ydata1,
+                    ydata2: ydata2,
+                    dataversion: dataversion,
+                  })
+                });
+                // res=request('/api/echarts/',date._d);
+                //   if ((this.state.year!=res.year)||(this.state.dataversion!=res.dataversion)){
+                //     this.setState({
+                //       year:res.year,
+                //       key:res.year,
+                //       xdata:res.xdata,
+                //       ydata1:res.ydata1,
+                //       ydata2:res.ydata2,
+                //       dataversion:res.dataversion
+                //       // xdata: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                //       // ydata1: [20.0 + i, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+                //       // ydata2: [20.6 + i, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                //     });
+                //   }
               }
             }
                         picker="year"/>

@@ -10,6 +10,7 @@ import UpdateForm from './components/UpdateForm';
 import { queryRule, updateRule, addRule, removeRule } from './service';
 import Map from '../Echarts'
 import request from '@/utils/request';
+import { windowOpen } from 'echarts/lib/util/format';
 
 /**
  * 添加节点
