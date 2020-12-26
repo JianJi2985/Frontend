@@ -9,6 +9,8 @@ import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { queryRule, updateRule, addRule, removeRule } from './service';
 import Map from '../Echarts'
+import request from '@/utils/request';
+
 /**
  * 添加节点
  * @param fields
@@ -245,8 +247,10 @@ const TableList = () => {
         <>
           <a
             onClick={() => {
+
               handleUpdateModalVisible(true);
               setStepFormValues(record);
+
             }}
           >
             <FormattedMessage id="pages.searchTable.config" defaultMessage="配置" />
@@ -275,7 +279,7 @@ const TableList = () => {
           <Button type="primary" key="primary" onClick={() => handleModalVisible(true)}>
             <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="新建" />
           </Button>,
-          <Button type="primary" key="primary" onClick={() => {}}>
+          <Button type="primary" key="primary" onClick={() => {request('/api/excel/')}}>
             <PlusOutlined /> <FormattedMessage id="pages.searchTable.sendemail" defaultMessage="发送邮件" />
           </Button>
         ]}
@@ -363,6 +367,7 @@ const TableList = () => {
             }
           }}
           onCancel={() => {
+
             handleUpdateModalVisible(false);
             setStepFormValues({});
           }}
